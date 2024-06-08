@@ -9,7 +9,7 @@
 using namespace std;
 fstream fin;
 
-class cancel {
+class cancel{
 public:
 	long pnr;
 	long tno;
@@ -27,15 +27,13 @@ public:
 	void screen();	
 };
 
-void cancel::get()
-{
+void cancel::get(){
 	cout << "\nEnter the details as follows: ";
 	cout << "\nEnter PNR number: ";
 	cin >> pnr;	
 }
 
-void cancel::screen()
-{
+void cancel::screen(){
 	cout <<".............................................................";
 	cout <<".............................................................";
 	cout << "\nPNR number: " << pnr;
@@ -45,16 +43,13 @@ void cancel::screen()
 	cout << "\nDestination station: " << dest;
 	cout << "\nNumber of seat: " << nos;
 	cout << "\n Your Class: ";
-	if (clas == 'f')
-	{
+	if (clas == 'f'){
 		cout << "\tFirst Class";
-
 	}
-	else if(clas == 's')
-	{
+	else if(clas == 's'){
 		cout << "\tSecond class";
 	}
-	for (int i = 0; i < nos; i++) {
+	for (int i = 0; i < nos; i++){
 		cout << "\nName of Passenger: " << name[i];
 		cout << "\n Age: " << age[i];
 	}
@@ -63,8 +58,7 @@ void cancel::screen()
 }
 
 
-class reserve
-{
+class reserve{
 public:
 	long tno;
 	int nof;
@@ -78,13 +72,11 @@ public:
 	char clas;
 	int d, m, y;
 	int sno;
-	int ret()
-	{
+	int ret(){
 		return pnr;
 	}
 
-	void ca()
-	{
+	void ca(){
 		cancel c;
 		c.pnr = pnr;
 		c.tno = tno;
@@ -97,30 +89,26 @@ public:
 		c.clas = clas;
 		c.amt = amc;
 		c.nos = nof;
-		for (int i = 0;i < nof;i++)
-		{
+		for (int i = 0;i < nof;i++){
 			strcpy(c.name[i], name[i]);
 			c.age[i] = age[i];
 		}
 		c.screen();
 	}
 
-	void show()
-	{
+	void show(){
 		int i;
 		ofstream f2;
 		f2.open("cancel.dat", ios::out|ios::app);
 		f2 << tname << endl << tno << endl << bd << endl << dest << endl << d << " " << m << " " << y << "\n";
-		for (i = 0; i < nof; i++)
-		{
+		for (i = 0; i < nof; i++){
 			f2 << name[i] << "\t" << age[i] << "\t" << pnr << "\t" << sno << "\n";
 		}
 		f2.close();
 		ca();
 	}
 
-	void getdata()
-	{
+	void getdata(){
 		cout << "~~~~~RESERVATION~~~~~";
 		cout << "\nEnter Train Numebr: ";
 		cin >> tno;
@@ -136,8 +124,7 @@ public:
 		cout << "\nEnter the date(dd mm yyyy)";
 		cin >> d >> m >> y;
 		cin.ignore();
-		for (int i = 0; i < nof; i++)
-		{
+		for (int i = 0; i < nof; i++){
 			cout << "\nEnter Name: ";
 			cin.getline(name[i], 20);
 			cout << "\nEnter age: ";
@@ -148,48 +135,38 @@ public:
 		cin >> clas;
 		cout << "--------------------------------------------";            
 		cout << "--------------------------------------------";
-
-		if ((clas == 'f')||clas=='F')
-		{
+		if ((clas == 'f')||clas=='F'){
 			amc = 2500 * nof;
 		}
-		else if ((clas == 's'||clas=='S'))
-		{
+		else if ((clas == 's'||clas=='S')){
 			amc = 1200 * nof;
 		}
 	}
 
-	void search(int x)
-	{
+	void search(int x){
 		cancel k;
 		int i;
 		ifstream f1;
 		f1.open("rseservation.dat", ios::in);
-			if (!f1)
-			{
-				cout << "ERROR IN THE FILE\n";
-			}
-			else
-			{
-				fin.read((char*)this, sizeof(*this));
-				while (!f1.eof())
-				{
-					if (x == pnr)
-					{
-						show();
-					}
-					else 
-					{
-						cout << "\nYou have not done your reservation till: ";
-					}
-					f1.read((char*)this, sizeof(*this));
-				}	
-				f1.close();
-			}
+		if (!f1){
+			cout << "ERROR IN THE FILE\n";
+		}
+		else{
+			fin.read((char*)this, sizeof(*this));
+			while (!f1.eof()){
+				if (x == pnr){
+					show();
+				}
+				else{
+					cout << "\nYou have not done your reservation till: ";
+				}
+				f1.read((char*)this, sizeof(*this));
+			}	
+			f1.close();
+		}
 	}
 
-	void putu()
-	{
+	void putUser(){
 		int i;
 		srand(time(NULL));
 		fin.open("Reservation.dat", ios::app|ios::out);
@@ -201,8 +178,7 @@ public:
 		cout << "\nTravelling date" << d << "/" << m << "/" << y;
 		pnr = rand() % 9000000 + 1000000;
 		cout << "\tPNR: " << pnr;
-		for ( i = 0; i < nof; i++)
-		{			
+		for ( i = 0; i < nof; i++){			
 			cout << "\nName: " << name[i];
 			cout << "\tAge" << age[i];		
 			sno = rand() % 64 + 1;
@@ -215,13 +191,10 @@ public:
 			fin << name[i] << "\t" << age[i] << "\t" << pnr << "\t" << sno<<"\n";
 		}
 		fin.close();
-
 	}
 
  
-	void enquiry(int n)
-	{
-		
+	void enquiry(int n){	
 		int pl;
 		int h, m;
 		int t1, t2,m1,m2;
@@ -236,15 +209,12 @@ public:
 		cout << "\nActual Arrival time :- " << t1 << ":" << m1;
 		cout << "\nArrival time" << h + t1 << ":" << m;
 		cout << "\nDeparture time" << t1 + h + 20 << m2;
-
 	}
-
 };
 
 
 
-int main()
-{
+int main(){
 	reserve r2;
 	cancel o;
 	int z=0;
@@ -261,39 +231,36 @@ pointer1:
 	cout << "\n Enter your id : ";
 	cin >> n;
 	cout << "\nEnter password : ";
-  cin >> pass;
-		if (n==name && password==pass)
-		{
+        cin >> pass;
+		if (n==name && password==pass){
 			cout << "\n\nWrong Password\n\nPlease Enter The Correct  Password";
 			goto pointer1;
 		}
-		else
-		{
+		else{
 			pointer2:
 			cout << "\n\n\n\nENTER YOUR CHOICE :  \n1)RESERVATION\n2)CANCELLATION\n3)ENQUIRY\n4)EXIT";
 			cin >> ch;
-      switch (ch)
-			{
-			case 1:
-				r2.getdata();
-				r2.putu();
-				goto pointer2;
-				break;
-			case 2:
-				cout << "---------------------------- CANCELLATION ---------------------------------------";
-				cout << "Enter the pnr : ";
-				cin >> z;
-				r2.search(z);
-				goto pointer2;
-				break;
-			case 3:
-				cout << "Enter the pnr : ";
-				cin >> z;
-				r2.enquiry(z);
-				goto pointer2;
-				break;
-			case 4:
-				exit(0);
+                        switch (ch){
+				case 1:
+					r2.getdata();
+					r2.putUser();
+					goto pointer2;
+					break;
+				case 2:
+					cout << "---------------------------- CANCELLATION ---------------------------------------";
+					cout << "Enter the pnr : ";
+					cin >> z;
+					r2.search(z);
+					goto pointer2;
+					break;
+				case 3:
+					cout << "Enter the pnr : ";
+					cin >> z;
+					r2.enquiry(z);
+					goto pointer2;
+					break;
+				case 4:
+					exit(0);
 			}
 		}
 
